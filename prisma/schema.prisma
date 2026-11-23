@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Defines the type of transaction.
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+// Stores registered users.
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // One user can have multiple transactions.
+  transactions Transaction[]
+}
+
+// Stores income and expense records.
+model Transaction {
+  id        String          @id @default(cuid())
+  title     String
+  amount    Decimal         @db.Decimal(12, 2)
+  type      TransactionType
+  category  String
+  date      DateTime
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  // Connects each transaction to its owner.
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+  @@index([userId, type])
+}
