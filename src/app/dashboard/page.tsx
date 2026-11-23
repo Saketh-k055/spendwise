@@ -4,7 +4,6 @@ import LogoutButton from "@/components/LogoutButton";
 import AddTransactionForm from "@/components/AddTransactionForm";
 import { prisma } from "@/lib/prisma";
 import MonthlyOverview from "@/components/MonthlyOverview";
-import MonthlyChart from "@/components/MonthlyChart";
 import {
   Wallet,
   TrendingUp,
