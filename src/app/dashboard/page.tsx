@@ -1,3 +1,4 @@
+export const instant = false;
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/components/LogoutButton";
@@ -11,7 +12,6 @@ import {
   PiggyBank,
   Receipt,
 } from "lucide-react";
-
 export default async function DashboardPage() {
   const session = await auth();
 
